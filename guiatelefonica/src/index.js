@@ -13,11 +13,23 @@ const App = () => {
     const handleChange = ({target}) => {
         setNewName(target.value)
     }
+
+    function noRepeat(persons, name){
+        const found = persons.find(person => person.name == name)
+        if (found) {
+          return true
+        }
+        return false
+      }
     
     const handleClick = (e) => {
         e.preventDefault()
-        setPersons([...persons, {name: newName}])
-        setNewName('')
+        if(noRepeat(persons, newName)){
+            window.alert(`${newName}, is already added to phonebook`);
+          } else {
+            setPersons([...persons, {name: newName}])
+            setNewName('')
+          }
     }
     
     return (
@@ -38,8 +50,8 @@ const App = () => {
                 )
             })}
         </div>
-      )
-    }
+    )
+}
     
 export default App
     
