@@ -5,13 +5,18 @@ import './index.css';
 const App = () => {
 
     const [ persons, setPersons ] = useState([
-      { name: 'Arto Hellas' }
+        { name: 'Arto Hellas', number: '040-1234567' }
     ]) 
 
     const [ newName, setNewName ] = useState('')
+    const [ newNumber, setNewNumber ] = useState('0')
 
-    const handleChange = ({target}) => {
+    const handleChangeN = ({target}) => {
         setNewName(target.value)
+    }
+
+    const handleChangeNu = ({target}) => {
+        setNewNumber(target.value)
     }
 
     function noRepeat(persons, name){
@@ -26,10 +31,11 @@ const App = () => {
         e.preventDefault()
         if(noRepeat(persons, newName)){
             window.alert(`${newName}, is already added to phonebook`);
-          } else {
-            setPersons([...persons, {name: newName}])
+        } else {
+            setPersons([...persons, {name: newName, number: newNumber}])
             setNewName('')
-          }
+            setNewNumber('')
+        }
     }
     
     return (
@@ -37,7 +43,10 @@ const App = () => {
             <h2>Phonebook</h2>
             <form onSubmit={handleClick}>
                 <div>
-                name: <input value={newName} onChange={handleChange}/>
+                    name: <input value={newName} onChange={handleChangeN}/>
+                </div>
+                <div>
+                    number: <input value={newNumber} onChange={handleChangeNu}/>
                 </div>
                 <div>
                 <button type="submit">add</button>
@@ -46,7 +55,7 @@ const App = () => {
             <h2>Numbers</h2>
             {persons.map(person => {
                 return(
-                    <h4 key={person.name}>{person.name}</h4>
+                    <h4 key={person.name}>{person.name}, {person.number}</h4>
                 )
             })}
         </div>
